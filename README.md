@@ -19,7 +19,7 @@ $ source venv/bin/activate
 Then install the dependencies:
 
 ```sh
-(env)$ pip install -r backend/requirements/base.txt
+(env)$ pip install -r backend/requirements.txt
 ```
 Once `pip` has finished downloading the dependencies:
 ```sh
