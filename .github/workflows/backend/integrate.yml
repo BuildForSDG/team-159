@@ -1,6 +1,6 @@
 name: Backend Continuous Integration
 
-on: [push]
+on: [create, pull_request]
 
 jobs:
   build:
