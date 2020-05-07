@@ -1,7 +1,9 @@
 name: Backend Continuous Integration
 
-on: [create, pull_request]
-
+on:
+  pull_request:
+    paths:
+      - 'backend/**'
 jobs:
   build:
 

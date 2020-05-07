@@ -3,6 +3,8 @@ name: develop Container to Heroku
 on:
   push:
     branches: [ develop ]
+    paths:
+      - 'backend/**'
 
 jobs:
   build:

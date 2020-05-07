@@ -3,6 +3,8 @@ name: master Container to Heroku
 on:
   push:
     branches: [ master ]
+    paths:
+      - 'backend/**'
 
 jobs:
   build:
