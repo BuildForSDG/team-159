@@ -1,0 +1,8 @@
+asgiref
+Django
+django-filter
+djangorestframework
+Markdown
+django-environ==0.4.5  # https://github.com/joke2k/django-environ
+pytz
+sqlparse
