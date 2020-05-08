@@ -2,3 +2,12 @@ __pycache__
 venv/
 db.sqlite3
 .DS_Store
+node_modules/
+package-lock.json
+public/*.br
+public/*.js
+public/*.map
+dist/
+public/
+.firebase
+firebase-debug.log
