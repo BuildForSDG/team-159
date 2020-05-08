@@ -7,3 +7,10 @@ services:
       - ./backend:/usr/src/app
     ports:
       - "8000:8000"
+
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/usr/src/app
+    ports:
+      - "3000:3000"

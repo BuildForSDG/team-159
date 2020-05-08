@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx webpack && node compress.js",
-    "start": "npx webpack -w && nodemon compress.js && nodemon dist/index.prod.js"
+    "start": "npx webpack -w && nodemon compress.js && nodemon dist/server.js"
   },
   "keywords": [],
   "author": "",

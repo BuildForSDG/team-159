@@ -1,16 +1,16 @@
-import React from 'react'
-import { renderToString } from 'react-dom/server'
-import App from './App'
-import http from "http";
-import cors from 'cors';
-import { StaticRouter } from 'react-router-dom';
-
-import process from "process";
 import express from 'express';
+import React from 'react'
+import { StaticRouter } from 'react-router-dom';
+import { renderToString } from 'react-dom/server'
 
+import App from './App'
+import cors from 'cors';
+
+// App
 const app  = express()
 app.use(cors());
 app.use(express.static("public"));
+
 app.get('*.js', (req, res, next) => {
     req.url = req.url + '.br';
     res.set('Content-Encoding', 'br');
@@ -45,15 +45,10 @@ app.get('**', (req, res) => {
     res.send(html)
 })
 
-const port = process.env.PORT || 5000;
+// Constants
+const HOST = '0.0.0.0';
+const PORT = process.env.PORT || 3000;
 
-const server = http.createServer(app);
+app.listen(PORT, HOST);
 
-try {
-  server.listen(port);
-  server.on("listening", () => {
-    console.log(`server started on ::${port}`);
-  });
-} catch (error) {
-  console.log(error);
-}
+console.log(`Running on http://${HOST}:${PORT}`);

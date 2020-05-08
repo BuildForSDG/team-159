@@ -63,7 +63,7 @@ build =  {
     mode: 'production',
     externals: [nodeExternals()],
     output: {
-      filename: 'index.prod.js',
+      filename: 'server.js',
       publicPath: '/'
     },
     resolve: {
