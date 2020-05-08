@@ -32,7 +32,7 @@ const CSSLoader = {
   ],
 };
 build =  {
-    entry: './src/main.js',
+    entry: './src/index.js',
     mode: 'production',
     output: {
       path: path.resolve(__dirname, './public'),
@@ -58,7 +58,7 @@ build =  {
   }
 
   var server = {
-    entry: './src/index.js',
+    entry: './src/server.js',
     target: 'node',
     mode: 'production',
     externals: [nodeExternals()],
