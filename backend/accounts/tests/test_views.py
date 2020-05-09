@@ -24,10 +24,12 @@ class TestLogin:
         assert result.status_code == 401
         assert result.data['detail'] == 'No active account found with the given credentials'
 
+
+@pytest.mark.django_db
 class TestUserRegistration:
 
     def test_registration(self, api_client):
-        url  = reverse('accounts:customers')
+        url  = reverse('accounts:customers-list')
         username='customer1'
         email='customer1@biz.com'
         first_name = 'customer1'
@@ -49,9 +51,12 @@ class TestUserRegistration:
             first_name = first_name,
             last_name = last_name,)
         
-        assert user
+        assert user.username == username
+        assert user.email == email
+        assert user.last_name == last_name
+        assert user.first_name == first_name
         # ansure user can login
-        assert password == user.check_password(password)
+        assert user.check_password(password)
 
         # test welcome email is sent
         assert len(mail.outbox) == 1

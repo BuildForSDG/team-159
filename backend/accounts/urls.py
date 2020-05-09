@@ -7,6 +7,7 @@ app_name = 'accounts'
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet, basename='users')
+router.register(r'customers', views.CustomerViewSet, basename='customers')
 
 urlpatterns = router.urls
 urlpatterns+= [
