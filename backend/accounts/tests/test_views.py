@@ -60,3 +60,6 @@ class TestUserRegistration:
 
         # test welcome email is sent
         assert len(mail.outbox) == 1
+        assert email in mail.outbox[0].to
+        assert f'Hello {first_name}' in mail.outbox[0].body
+        

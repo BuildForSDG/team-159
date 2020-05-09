@@ -136,3 +136,5 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
+
+EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
