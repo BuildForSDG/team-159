@@ -11,3 +11,4 @@ dist/
 public/
 .firebase
 firebase-debug.log
+.env
