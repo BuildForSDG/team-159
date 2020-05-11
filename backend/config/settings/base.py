@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     # uwezo apps
     'accounts',
+    'business',
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
