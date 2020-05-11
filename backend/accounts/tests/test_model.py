@@ -1,4 +1,6 @@
 from django.test import TestCase, RequestFactory
+from mixer.backend.django import mixer
+
 from accounts.models import Business, User
 from accounts.views import (
     NewBusiness
@@ -8,16 +10,7 @@ from accounts.views import (
 class BusinessTestCase(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
-        self.business = Business.objects.create(
-            owner=User.objects.get(id=1),
-            name="uwezo",
-            business_type="communication",
-            business_number="1234567890",
-            email="joseph@gmail.com",
-            location="Nairobi",
-            description="my description",
-            phone_number="07121212121"
-        )
+        self.business = mixer.blend(Business)
 
     def test_create_business(self):
         request = self.factory.get("/new")
