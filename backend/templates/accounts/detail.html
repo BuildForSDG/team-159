@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        span {
+            color: #2727fa;
+            font-size: 1.3em;
+        }
+        p {
+            padding: 10px 0;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .detail {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 15px 0;
+            width: 50%;
+            margin: auto;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="detail">
+    <p><span>Owner:</span>{{ object.owner }}</p>
+    <p><span>Name:</span>{{ object.name }}</p>
+    <p><span>Email:</span>{{ object.email }}</p>
+    <p><span>Business Number:</span>{{ object.business_number }}</p>
+    <p><span>Business Type:</span>{{ object.business_type }}</p>
+    <p><span>Phone Number:</span> {{ object.phone_number }}</p>
+    <p><span>Location: </span> {{ object.location }}</p>
+    <p><span>Description: </span> {{ object.description }}</p>
+    <span>Images</span>
+    <img src="{{ object.image }}" alt="">
+    <span>Certificate</span>
+    <img src="{{ object.cert }}" alt="">
+</div>
+</body>
+</html>

@@ -64,7 +64,7 @@ ROOT_URLCONF = 'src.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -90,7 +90,8 @@ WSGI_APPLICATION = 'src.wsgi.application'
 #     }
 # }
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='sqlite://./db.sqlite3'),
+    # 'default': env.db('DATABASE_URL', default='sqlite://./db.sqlite3'),
+    'default': env.db(default='sqlite://./db.sqlite3'),
 }
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

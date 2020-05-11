@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        p {
+            padding: 10px;
+        }
+
+        .detail {
+            width: 30%;
+            margin: auto;
+            padding-top: 100px;
+        }
+        a {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="detail">
+    {% for biz in business %}
+        <p><a href="{% url "accounts:read" biz.id %}">{{ biz.name }} </a> <a
+                style="background-color: #f12626; color: white; padding: 7px 15px;"
+                href="{% url "accounts:delete" biz.id %}">delete</a></p>
+    {% endfor %}
+</div>
+</body>
+</html>
