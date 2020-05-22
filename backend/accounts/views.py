@@ -1,7 +1,51 @@
-from rest_framework import viewsets
-from .models import User
-from .serializers import UserSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import *
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+
+class UserList(APIView):
+    def get(self, request):
+        model = User.objects.all()
+        serializer = UsersSerializer(model, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = UsersSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserDetail(APIView):
+
+    def get_user(self, National_ID):
+        try:
+            model = User.objects.get(id=National_ID)
+            return model
+        except User.DoesNotExist:
+            return
+
+    def get(self, request, National_ID):
+        if not self.get_user(National_ID):
+            return Response(f"User with {National_ID} is not found in the database", status=status.HTTP_404_NOT_FOUND)
+        serializer = UsersSerializer(self.get_user(National_ID))
+        return Response(serializer.data)
+
+    def put(self, request, National_ID):
+        serializer = UsersSerializer(self.get_user(National_ID), data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, National_ID):
+        if not self.get_user(National_ID):
+            return Response(f"User with {National_ID} is not found in the database", status=status.HTTP_404_NOT_FOUND)
+        model = self.get_user(National_ID)
+        model.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+def test_this_for_me():
+    return 'I am coming home'
