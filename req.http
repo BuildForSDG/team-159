@@ -1,0 +1,57 @@
+GET http://127.0.0.1:8000/api/v1/
+
+### Businesses
+GET http://127.0.0.1:8000/api/v1/business
+
+### New business
+POST http://127.0.0.1:8000/add
+Authorization: Key: Authorization, Value: Token 1a0b20fb4b0137c24893695c74ac068f1e26f5d9
+
+{
+  "first_name": "Joseph",
+  "last_name": "Gitau",
+  "name": "Joseph Gitau"
+}
+
+###
+GET http://127.0.0.1:8000/add
+Host: 127.0.0.1:8000
+Authorization: Token 1a0b20fb4b0137c24893695c74ac068f1e26f5d9
+Cookie: csrftoken=jZGSLAJXWsK75xZFS3U5JjOLklMp6wNeIgySrhiuLQfUfeSUc3G1kXHVTF3YOYm9
+
+
+###
+POST http://127.0.0.1:8000/api/token
+Content-Type: application/json
+
+{
+  "username": "joseph",
+  "password": "50391798"
+}
+###
+POST http://127.0.0.1:8000/rest_auth/login/
+Content-Type: application/json
+
+{
+  "username": "joseph",
+  "password": "50391798"
+}
+
+###
+GET http://127.0.0.1:8000/business/add
+Host: 127.0.0.1:8000
+Authorization: Token 1a0b20fb4b0137c24893695c74ac068f1e26f5d9
+Cookie: csrftoken=jZGSLAJXWsK75xZFS3U5JjOLklMp6wNeIgySrhiuLQfUfeSUc3G1kXHVTF3YOYm9
+
+###
+GET http://127.0.0.1:8000/api/v1/business/update/1
+Host: 127.0.0.1:8000
+Authorization: Token 1a0b20fb4b0137c24893695c74ac068f1e26f5d9
+Cookie: csrftoken=jZGSLAJXWsK75xZFS3U5JjOLklMp6wNeIgySrhiuLQfUfeSUc3G1kXHVTF3YOYm9
+
+###
+GET http://127.0.0.1:8000/api/v1/loan
+Host: 127.0.0.1:8000
+Authorization: Token 1a0b20fb4b0137c24893695c74ac068f1e26f5d9
+Cookie: csrftoken=jZGSLAJXWsK75xZFS3U5JjOLklMp6wNeIgySrhiuLQfUfeSUc3G1kXHVTF3YOYm9
+
