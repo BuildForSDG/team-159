@@ -1,16 +1,21 @@
 from rest_framework.views import APIView
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import *
 
 
 class UserList(APIView):
+    # permission_classes((IsAuthenticated,))
     def get(self, request):
         model = User.objects.all()
         serializer = UsersSerializer(model, many=True)
         return Response(serializer.data)
 
     def post(self, request):
+        # permission_classes((IsAuthenticated,))
+        model = User.objects.all()
         serializer = UsersSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -19,7 +24,7 @@ class UserList(APIView):
 
 
 class UserDetail(APIView):
-
+    # permission_classes((IsAuthenticated,))
     def get_user(self, National_ID):
         try:
             model = User.objects.get(id=National_ID)
@@ -47,5 +52,3 @@ class UserDetail(APIView):
         model.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-def test_this_for_me():
-    return 'I am coming home'

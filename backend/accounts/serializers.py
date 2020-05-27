@@ -1,15 +1,18 @@
 from rest_framework import serializers
 from .models import User
+from django.contrib.auth.hashers import make_password
 
 
 class UsersSerializer(serializers.ModelSerializer):
-    Username = serializers.CharField(required=False)
-    Business_number = serializers.CharField(required=False)
-    Email = serializers.EmailField(required=False)
-    Full_name = serializers.CharField(required=False)
-    National_ID = serializers.CharField(required=False)
-    phone_number = serializers.CharField(required=False)
-
     class Meta:
         model = User
         fields = '__all__'
+
+    def validate_password(self, value: str) -> str:
+        """
+        Hash value passed by user.
+
+        :param value: password of a user
+        :return: a hashed version of the password
+        """
+        return make_password(value)
