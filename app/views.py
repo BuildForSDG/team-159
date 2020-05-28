@@ -7,9 +7,9 @@ class IsLender(BasePermission):
     def has_permission(self, request, view):
         return bool(request.user.is_lender)
 
-# class IsLender(BasePermission):
-#     def has_permission(self, request, view):
-#         return bool(request.user.is_lender)
+class IsInvestor(BasePermission):
+    def has_permission(self, request, view):
+        return bool(request.user.is_investor)
 
 class RequestBusinessDataMixin:
     def get_queryset(self):
