@@ -36,7 +36,64 @@ def unique_max(self, const, maxL, verbose, not_verbose, uniq=True):
     self.assertEquals(const.unique, uniq)
     self.assertEquals(const.max_length, maxL)
 
+class UserTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        User.objects.create(first_name="Joseph", last_name="Gitau")
+        
+    def test_setup_data_created(self):
+        self.assertEquals(User.objects.count(), 1)
+        self.assertNotEquals(User.objects.count(), 0)
 
+    def setUp(self): 
+        self.first = User.objects.get(id=1)
+    
+    def test_object_name(self):
+        """
+        Test __str__ returns f"{self.first.first_name}, {self.first.last_name}"
+        :return: None
+        """
+        self.assertEquals(str(self.first), f"{self.first.first_name}, {self.first.last_name}")
+        self.assertNotEquals(str(self.first), f"{self.first.first_name}, {self.first.last_name}.....")
+        
+   def test_last_name_label(self):
+        label = self.first._meta.get_field(field_name="last_name")
+        self.assertEquals(type(self.first.last_name), str)
+        self.assertEquals(label.max_length, 30)
+        const_null_blank(self, verbose="last name", not_verbose="last_name", const=label)
+        
+   def test_first_name_label(self):
+        label = self.first._meta.get_field(field_name="first_name")
+        self.assertEquals(type(self.first.first_name), str)
+        self.assertEquals(label.max_length, 30)
+        const_null_blank(self, verbose="first name", not_verbose="first_name", const=label)
+        
+   def test_national_id_label(self):
+        label = self.first._meta.get_field(field_name="national_id")
+        self.assertEquals(label.max_length, 30)
+        const_null_blank(self, verbose="national_id", not_verbose="national_id", const=label)
+        
+   def test_business_number_label(self):
+        label = self.first._meta.get_field(field_name="business_number")
+        self.assertEquals(label.max_length, 30)
+        const_null_blank(self, verbose="business number", not_verbose="business_number", const=label)
+    
+    def test_email_label(self):
+        """
+        Test Email field
+        :return: None
+        """
+        self.assertEquals(type(self.first.email), str)
+        self.assertEquals(self.first.email, "joseph@gmail.com")
+        self.assertNotEquals(self.first.email, "joseph@gmail.co")
+        self.assertIn("@gmail.com", self.first.email)
+        const = self.first._meta.get_field(field_name="email")
+        self.assertNotEquals(const.verbose_name, "email_")
+        unique_max(self, const, maxL=200, verbose="email", not_verbose="emailing")
+    
+    def test_get_username_func(self):
+        self.assertEquals(self.first.get_username, None)
+        
 class LoanModelTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
