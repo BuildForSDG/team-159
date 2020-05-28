@@ -53,12 +53,17 @@ class User(AbstractUser):
     national_id = models.IntegerField(max_length=30, null=False, blank=False)
     email = models.EmailField(max_length=200, unique=True, blank=False, null=False)
     business_number = models.ForeignKey(Business, max_length=30, null=False, blank=False)
+    images = models.FileField(upload_to='Users/Images/')
     
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
     
     def get_username(self):
         pass
+    
+    @property
+    def image(self):
+        return self.images.url
     
     class Meta:
         verbose_name = _('User')
