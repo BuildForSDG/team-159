@@ -51,6 +51,7 @@ class User(AbstractUser):
     first_name = models.Charfield(max_length=30, null=False, blank=False)
     last_name = models.Charfield(max_length=30, null=False, blank=False)
     national_id = models.IntegerField(max_length=30, null=False, blank=False)
+    email = models.EmailField(max_length=200, unique=True, blank=False, null=False)
     business_number = models.ForeignKey(Business, max_length=30, null=False, blank=False)
     
     def __str__(self):
@@ -161,6 +162,10 @@ class Investor(AbstractUser):
     
     def get_username(self):
         pass
+    
+    @property
+    def image(self):
+        return self.images.url
     
     class Meta:
         verbose_name = _('Investor')
