@@ -5,3 +5,5 @@ from .models import *
 admin.site.register(Business)
 admin.site.register(Lender)
 admin.site.register(Loan)
+admin.site.register(Investor)
+admin.site.register(User)
