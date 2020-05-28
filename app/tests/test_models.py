@@ -36,6 +36,104 @@ def unique_max(self, const, maxL, verbose, not_verbose, uniq=True):
     self.assertEquals(const.unique, uniq)
     self.assertEquals(const.max_length, maxL)
 
+class InvestorModelTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        """
+        Setting up of the data
+        :return: None
+        """
+        Investor.objects.create()
+
+    def setUp(self):
+        self.first = Investor.objects.get(id=1)
+
+    def test_created_one_object(self):
+        """
+        Test that only one Investor is stored in the database
+        :return: None
+        """
+        self.assertEquals(Investor.objects.all().count(), 1)
+        self.assertNotEquals(Investor.objects.all().count(), 2)
+    
+    def test_object_name(self):
+        """
+        Test __str__ returns f"{self.first.first_name}, {self.first.last_name}"
+        :return: None
+        """
+        self.assertEquals(str(self.first), f"{self.first.first_name}, {self.first.last_name}")
+        self.assertNotEquals(str(self.first), f"{self.first.first_name}, {self.first.last_name}.....")
+    
+   def test_last_name_label(self):
+        label = self.first._meta.get_field(field_name="last_name")
+        self.assertEquals(type(self.first.last_name), str)
+        self.assertEquals(label.max_length, 30)
+        const_null_blank(self, verbose="last name", not_verbose="last_name", const=label)
+        
+   def test_first_name_label(self):
+        label = self.first._meta.get_field(field_name="first_name")
+        self.assertEquals(type(self.first.first_name), str)
+        self.assertEquals(label.max_length, 30)
+        const_null_blank(self, verbose="first name", not_verbose="first_name", const=label)
+        
+   def test_national_id_label(self):
+        label = self.first._meta.get_field(field_name="national_id")
+        self.assertEquals(label.max_length, 30)
+        const_null_blank(self, verbose="national_id", not_verbose="national_id", const=label)
+        
+   def test_phone_number_label(self):
+        label = self.first._meta.get_field(field_name="phone_number")
+        self.assertEquals(label.max_length, 30)
+        const_null_blank(self, verbose="phone_number", not_verbose="phone_number", const=label)
+    
+    def test_email_label(self):
+        """
+        Test Email field
+        :return: None
+        """
+        self.assertEquals(type(self.first.email), str)
+        self.assertEquals(self.first.email, "joseph@gmail.com")
+        self.assertNotEquals(self.first.email, "joseph@gmail.co")
+        self.assertIn("@gmail.com", self.first.email)
+        const = self.first._meta.get_field(field_name="email")
+        self.assertNotEquals(const.verbose_name, "email_")
+        unique_max(self, const, maxL=200, verbose="email", not_verbose="emailing")    
+    
+    def test_get_username_func(self):
+        self.assertEquals(self.first.get_username, None)
+        
+    def test_description_label(self):
+        """
+        Test Description field
+        :return: None
+        """
+        self.assertEquals(self.first.description, "Were are a bank")
+        self.assertNotEquals(self.first.description, "Were are a banks")
+        const = self.first._meta.get_field(field_name="description")
+        self.assertNotEquals(const.verbose_name, "descriptions")
+        unique_max(self, const, maxL=None, uniq=False, verbose="description", not_verbose="descriptions")
+
+    def test_website_label(self):
+        """
+        Test Url field
+        :return: None
+        """
+        self.assertEquals(self.first.website, "https://equity.com")
+        self.assertNotEquals(self.first.website, "http://equity.com")
+        self.assertIn("https://", self.first.website)
+        self.assertIn(".com", self.first.website)
+        const = self.first._meta.get_field(field_name="website")
+        self.assertNotEquals(const.verbose_name, "websites")
+        unique_max(self, const, maxL=200, uniq=True, verbose="website", not_verbose="websites")
+    
+    def test_image_method_url(self):
+        """
+        Test image url returned
+        :return:
+        """
+        self.assertIn("/media/Investor/Images/", self.first.image)
+        self.assertNotIn("/media/Investor/Certificate/", self.first.image)
+
 class UserTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -93,6 +191,14 @@ class UserTestCase(TestCase):
     
     def test_get_username_func(self):
         self.assertEquals(self.first.get_username, None)
+    
+    def test_image_method_url(self):
+        """
+        Test image url returned
+        :return:
+        """
+        self.assertIn("/media/Users/Images/", self.first.image)
+        self.assertNotIn("/media/Users/Certificate/", self.first.image)
         
 class LoanModelTestCase(TestCase):
     @classmethod
@@ -171,6 +277,7 @@ class LoanModelTestCase(TestCase):
         const_null_blank(self, const, verbose="purpose", not_verbose="iiax")
 
 
+        
 class LenderModelTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -202,7 +309,10 @@ class LenderModelTestCase(TestCase):
         """
         self.assertEquals(str(self.first), "Equity")
         self.assertNotEquals(str(self.first), "Equitys")
-
+    
+    def test_username_field(self):
+        self.assertEquals(self.first._meta.get_field(field_name="USERNAMEFIELD"), None)
+        
     def test_is_lender_label(self):
         """
         Test is_lender field
