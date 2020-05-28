@@ -34,3 +34,8 @@ class LenderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lender
         fields = "__all__"
+
+class InvestorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Investor
+        fields = "__all__"
