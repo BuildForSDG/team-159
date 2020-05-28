@@ -7,6 +7,9 @@ class IsLender(BasePermission):
     def has_permission(self, request, view):
         return bool(request.user.is_lender)
 
+# class IsLender(BasePermission):
+#     def has_permission(self, request, view):
+#         return bool(request.user.is_lender)
 
 class RequestBusinessDataMixin:
     def get_queryset(self):
@@ -37,6 +40,14 @@ class RequestLoanDataMixin:
         queryset = Lender.objects.filter(slug=self.request)
         return queryset
 
+class RequestUserDataMixin:
+    def get_queryset(self):
+        """
+        Filter the data associated with the current authenticated User
+        :return: User Object
+        """
+        queryset = User.objects.filter(slug=self.request)
+        return queryset
 
 class SingleBusinessObjectMixin:
     """
@@ -73,7 +84,25 @@ class SingleLenderObjectMixin:
         except self.model.DoesNotExist:
             return serializer.save()
         else:
-            return self.permission_denied(request=self.request, message="Can only have one business")
+            return self.permission_denied(request=self.request, message="Can only have one Lender")
+
+class SingleUserObjectMixin:
+    """
+    All Objects should have a single instance
+    """
+
+    def perform_create(self, serializer):
+        """
+        Register and Authenticated User should be unique
+        :param serializer:
+        :return: Error, Object
+        """
+        try:
+            exists = self.model.objects.get(owner=self.request.user)
+        except self.model.DoesNotExist:
+            return serializer.save()
+        else:
+            return self.permission_denied(request=self.request, message="Can only have one User")
 
 
 # Business Api
@@ -137,18 +166,52 @@ class DeleteLenderView(RequestLenderDataMixin, RetrieveDestroyAPIView):
 
 # Loan Api
 class CreateLoanView(RequestLoanDataMixin, ListCreateAPIView):
+    """
+    Update Loan GET, POST
+    """
     serializer_class = LoanSerializer
     queryset = Loan.objects.all()
     permission_classes = (IsAuthenticated,)
 
 
 class UpdateLoanView(RequestLoanDataMixin, RetrieveUpdateAPIView):
+    """
+    Update Loan GET, PUT, PATCH
+    """
     serializer_class = LoanSerializer
     queryset = Loan.objects.all()
     permission_classes = (IsAuthenticated,)
 
-
 class DeleteLoanView(RequestLoanDataMixin, RetrieveDestroyAPIView):
+    """
+    Update Loan GET, DELETE
+    """
     serializer_class = LoanSerializer
     queryset = Loan.objects.all()
     permission_classes = (IsAuthenticated, IsAdminUser)
+    
+class CreateUserView(RequestUserDataMixin, SingleUserObjectMixin, ListCreateAPIView):
+    """
+    Update User GET, POST
+    """
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    permission_classes = (IsAuthenticated,)
+
+class UpdateUserView(RequestUserDataMixin, RetrieveUpdateAPIView):
+    """
+    Update User GET, PUT, PATCH
+    """
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    permission_classes = (IsAuthenticated,)
+    look_field = "first_name"
+
+class DeleteUserView(RequestUserDataMixin, RetrieveDestroyAPIView):
+    """
+    Update User GET, DELETE
+    """
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    permission_classes = (IsAuthenticated,IsAdmin,)
+    look_field = "first_name"
