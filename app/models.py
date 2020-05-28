@@ -141,7 +141,7 @@ class Lender(AbstractUser):
 
 
 class Investor(AbstractUser):
-    is_lender = models.BooleanField(
+    is_investor = models.BooleanField(
         _('is lender'),
         default=False,
     )
