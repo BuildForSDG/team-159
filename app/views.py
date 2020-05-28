@@ -142,7 +142,6 @@ class CreateLenderView(RequestLenderDataMixin, SingleLenderObjectMixin, ListCrea
     """
     serializer_class = LenderSerializer
     queryset = Lender.objects.all()
-    permission_classes = (IsAuthenticated, IsLender,)
     lookup_field = "name"
 
 
@@ -161,7 +160,7 @@ class DeleteLenderView(RequestLenderDataMixin, RetrieveDestroyAPIView):
     """
     serializer_class = LenderSerializer
     queryset = Lender.objects.all()
-    permission_classes = (IsAuthenticated, IsLender, IsAdminUser)
+    permission_classes = (IsAuthenticated, IsAdminUser)
 
 
 # Loan Api
@@ -189,14 +188,14 @@ class DeleteLoanView(RequestLoanDataMixin, RetrieveDestroyAPIView):
     serializer_class = LoanSerializer
     queryset = Loan.objects.all()
     permission_classes = (IsAuthenticated, IsAdminUser)
-    
+
+# User api    
 class CreateUserView(RequestUserDataMixin, SingleUserObjectMixin, ListCreateAPIView):
     """
     Update User GET, POST
     """
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    permission_classes = (IsAuthenticated,)
 
 class UpdateUserView(RequestUserDataMixin, RetrieveUpdateAPIView):
     """
@@ -213,5 +212,32 @@ class DeleteUserView(RequestUserDataMixin, RetrieveDestroyAPIView):
     """
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    permission_classes = (IsAuthenticated,IsAdmin,)
+    permission_classes = (IsAuthenticated,IsAdminUser,)
+    look_field = "first_name"
+
+# Investor api
+class CreateInvestorView(RequestInvestorDataMixin, SingleInvestorObjectMixin, ListCreateAPIView):
+    """
+    Update Investor GET, POST
+    """
+    serializer_class = InvestorSerializer
+    queryset = Investor.objects.all()
+    
+
+class UpdateInvestorView(RequestUserDataMixin, RetrieveUpdateAPIView):
+    """
+    Update Investor GET, PUT, PATCH
+    """
+    serializer_class = InvestorSerializer
+    queryset = Investor.objects.all()
+    permission_classes = (IsAuthenticated,IsInvestor)
+    look_field = "first_name"
+
+class DeleteInvestorView(RequestInvestorDataMixin, RetrieveDestroyAPIView):
+    """
+    Update Investor GET, DELETE
+    """
+    serializer_class = InvestorSerializer
+    queryset = Investor.objects.all()
+    permission_classes = (IsAuthenticated,IsAdminUser,)
     look_field = "first_name"
