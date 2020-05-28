@@ -96,13 +96,6 @@ class Loan(models.Model):
         verbose_name_plural = _("Loans")
         db_table = "Loan"
 
-class LenderManager(models.Manager):
-     def create_lender(self, email=None, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', False)
-        extra_fields.setdefault('is_superuser', False)
-        extra_fields.setdefault('is_lender', True)
-        return self._create_user(username, email, password, **extra_fields)
-
 class Lender(AbstractUser):
     """
     Registered Money lenders
