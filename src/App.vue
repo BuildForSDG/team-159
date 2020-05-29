@@ -1,5 +1,6 @@
 <template>
   <div id="app" class="overflow-auto">
+    <!-- ==================  Header ================== -->
     <div class="w-full fixed lg:z-50 top-0" style="background-color: rgb(51, 19, 159);">
       <header class="max-w-screen-xl mx-auto">
 
@@ -69,13 +70,24 @@
                 aria-hidden="true"></i>
             </div>
           </div>
-
         </nav>
-
       </header>
     </div>
+    <!-- ==================  PageView ================== -->
     <div class="w-full overflow-auto">
       <router-view/>
     </div>
+    <!-- ==================  Footer ================== -->
+    <Footer/>
   </div>
 </template>
+<script>
+import Footer from './components/Footer.vue';
+
+export default {
+  name: 'App',
+  components: {
+    Footer,
+  },
+};
+</script>
